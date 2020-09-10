@@ -103,6 +103,8 @@ db.models.projects.hasMany(db.models.documents, { as: 'documents' });
 db.models.documents.belongsTo(db.models.projects, { foreignKey: 'project_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 //Sprint Tasks
+db.models.sprints.hasMany(db.models.tasks, { as: 'tasks' });
+db.models.tasks.belongsTo(db.models.sprints, { foreignKey: 'sprint_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 //Sprint Documents
 db.models.sprints.hasMany(db.models.documents, { as: 'documents' });
@@ -136,9 +138,5 @@ db.models.comments.belongsTo(db.models.grievances, { foreignKey: 'grievance_id',
 //TaskMeta Comment
 db.models.task_metas.hasMany(db.models.comments, { as: 'comments' });
 db.models.comments.belongsTo(db.models.task_metas, { foreignKey: 'task_meta_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-
-//Sprint Comment
-db.models.sprints.hasMany(db.models.comments, { as: 'comments' });
-db.models.comments.belongsTo(db.models.sprints, { foreignKey: 'sprint_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 module.exports = db;
