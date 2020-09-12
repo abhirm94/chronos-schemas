@@ -18,8 +18,8 @@ db.models.roles.belongsToMany(db.models.ranks, { through: db.models.designations
 db.models.ranks.belongsToMany(db.models.roles, { through: db.models.designations });
 
 //Designations Permissions
-db.models.designations.belongsToMany(db.models.permissions, { through: 'designtion_permission' });
-db.models.permissions.belongsToMany(db.models.designations, { through: 'designtion_permission' });
+db.models.designations.belongsToMany(db.models.permissions, { through: 'designation_permission' });
+db.models.permissions.belongsToMany(db.models.designations, { through: 'designation_permission' });
 
 //User UserDetails
 db.models.users.belongsTo(db.models.user_details, { foreignKey: 'user_details_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
@@ -115,9 +115,6 @@ db.models.sprints.belongsTo(db.models.projects, { foreignKey: 'project_id', onDe
 
 //Review ReviewType
 db.models.reviews.belongsTo(db.models.review_types, { foreignKey: 'review_type_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-
-//Sprint Reviews
-db.models.sprints.belongsTo(db.models.reviews, { foreignKey: 'review_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 //ProjectMeta Reviews
 db.models.project_metas.hasMany(db.models.reviews, { as: 'reviews' });
