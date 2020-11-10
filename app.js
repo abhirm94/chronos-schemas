@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 var db = require("./db/db");
 
 var app = express();
+var router = require("./routes/index.routes.js")
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,5 +16,7 @@ app.get("/", (req, res) => {
 });
 
 db.connectDb();
+
+app.use("/api/v1", router);
 
 module.exports = app;
