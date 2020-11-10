@@ -6,10 +6,21 @@ moment().format();
 module.exports.getTasksToday = async (req, res) => {
 	try {
         const user = req.user;
-        const u = await db.models.user.findOne({
+        const u = await db.models.users.findOne({
             where: { id : user.id },
             include: [{
-                model : db.models.tasks
+                model : db.models.tasks,
+                include : [
+                    {
+                        model : db.models.task_metas
+                    }, 
+                    {
+                        model : db.models.task_categories
+                    },
+                    {
+                        model : db.models.task_types
+                    }
+                ]
             }]
         })
 
@@ -43,7 +54,18 @@ module.exports.getTasksMonth = async (req, res) => {
         const u = await db.models.user.findOne({
             where: { id : user.id },
             include: [{
-                model : db.models.tasks
+                model : db.models.tasks,
+                include : [
+                    {
+                        model : db.models.task_metas
+                    }, 
+                    {
+                        model : db.models.task_categories
+                    },
+                    {
+                        model : db.models.task_types
+                    }
+                ]
             }]
         })
 
@@ -77,7 +99,18 @@ module.exports.getTasksWeek = async (req, res) => {
         const u = await db.models.user.findOne({
             where: { id : user.id },
             include: [{
-                model : db.models.tasks
+                model : db.models.tasks,
+                include : [
+                    {
+                        model : db.models.task_metas
+                    }, 
+                    {
+                        model : db.models.task_categories
+                    },
+                    {
+                        model : db.models.task_types
+                    }
+                ]
             }]
         })
 
