@@ -25,6 +25,9 @@ module.exports.Project = sequelize.define(
         },
         end_date: {
             type: DataTypes.DATE,
+        },
+        project_type: {
+            type: DataTypes.STRING,
         }
 	},
 	{
