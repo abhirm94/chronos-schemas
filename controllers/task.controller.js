@@ -1,24 +1,23 @@
-var moment = require('moment'); 
+var moment = require('moment');
 const db = require("../db/models/db");
 const config = require("../config/config");
 moment().format();
 
-module.exports.getTasksToday = async (req, res) => {
-	try {
+module.exports.getTasksToday = async(req, res) => {
+    try {
         const user = req.user;
         const u = await db.models.users.findOne({
-            where: { id : user.id },
+            where: { id: user.id },
             include: [{
-                model : db.models.tasks,
-                include : [
-                    {
-                        model : db.models.task_metas
-                    }, 
-                    {
-                        model : db.models.task_categories
+                model: db.models.tasks,
+                include: [{
+                        model: db.models.task_metas
                     },
                     {
-                        model : db.models.task_types
+                        model: db.models.task_categories
+                    },
+                    {
+                        model: db.models.task_types
                     }
                 ]
             }]
@@ -27,8 +26,8 @@ module.exports.getTasksToday = async (req, res) => {
         const user_tasks = u.tasks;
         const today_tasks = [];
         const today = new Date();
-        for (i in user_tasks)  {
-            if(i.task_date.getDate() === today.getDate() && i.task_date.getMonth() === today.getMonth() && i.task_date.getFullYear() === today.getFullYear) {
+        for (i in user_tasks) {
+            if (i.task_date.getDate() === today.getDate() && i.task_date.getMonth() === today.getMonth() && i.task_date.getFullYear() === today.getFullYear) {
                 today_tasks.push(i);
             }
         }
@@ -38,32 +37,31 @@ module.exports.getTasksToday = async (req, res) => {
             tasks: today_tasks
         })
 
-	} catch (e) {
-		console.log(e);
-		res.status(500).send({
-			success: false,
-			message: "Internal Server Error",
-			error: e.message,
-		});
-	}
+    } catch (e) {
+        console.log(e);
+        res.status(500).send({
+            success: false,
+            message: "Internal Server Error",
+            error: e.message,
+        });
+    }
 };
 
-module.exports.getTasksMonth = async (req, res) => {
-	try {
+module.exports.getTasksMonth = async(req, res) => {
+    try {
         const user = req.user;
         const u = await db.models.user.findOne({
-            where: { id : user.id },
+            where: { id: user.id },
             include: [{
-                model : db.models.tasks,
-                include : [
-                    {
-                        model : db.models.task_metas
-                    }, 
-                    {
-                        model : db.models.task_categories
+                model: db.models.tasks,
+                include: [{
+                        model: db.models.task_metas
                     },
                     {
-                        model : db.models.task_types
+                        model: db.models.task_categories
+                    },
+                    {
+                        model: db.models.task_types
                     }
                 ]
             }]
@@ -72,8 +70,8 @@ module.exports.getTasksMonth = async (req, res) => {
         const user_tasks = u.tasks;
         const today_tasks = [];
         const today = new Date();
-        for (i in user_tasks)  {
-            if(i.task_date.getMonth() === today.getMonth() && i.task_date.getFullYear() === today.getFullYear) {
+        for (i in user_tasks) {
+            if (i.task_date.getMonth() === today.getMonth() && i.task_date.getFullYear() === today.getFullYear) {
                 today_tasks.push(i);
             }
         }
@@ -83,32 +81,31 @@ module.exports.getTasksMonth = async (req, res) => {
             tasks: today_tasks
         })
 
-	} catch (e) {
-		console.log(e);
-		res.status(500).send({
-			success: false,
-			message: "Internal Server Error",
-			error: e.message,
-		});
-	}
+    } catch (e) {
+        console.log(e);
+        res.status(500).send({
+            success: false,
+            message: "Internal Server Error",
+            error: e.message,
+        });
+    }
 };
 
-module.exports.getTasksWeek = async (req, res) => {
-	try {
+module.exports.getTasksWeek = async(req, res) => {
+    try {
         const user = req.user;
-        const u = await db.models.user.findOne({
-            where: { id : user.id },
+        const u = await db.models.users.findOne({
+            where: { id: parseInt(user.id) },
             include: [{
-                model : db.models.tasks,
-                include : [
-                    {
-                        model : db.models.task_metas
-                    }, 
-                    {
-                        model : db.models.task_categories
+                model: db.models.tasks,
+                include: [{
+                        model: db.models.task_metas
                     },
                     {
-                        model : db.models.task_types
+                        model: db.models.task_categories
+                    },
+                    {
+                        model: db.models.task_types
                     }
                 ]
             }]
@@ -117,9 +114,9 @@ module.exports.getTasksWeek = async (req, res) => {
         const user_tasks = u.tasks;
         const today_tasks = [];
         const today = moment();
-        for (i in user_tasks)  {
+        for (i in user_tasks) {
             var dte = moment(i.task_date.toString());
-            if(dte.isoWeek() == today.isoWeek()){
+            if (dte.isoWeek() == today.isoWeek()) {
                 today_tasks.push(i);
             }
         }
@@ -129,12 +126,12 @@ module.exports.getTasksWeek = async (req, res) => {
             tasks: today_tasks
         })
 
-	} catch (e) {
-		console.log(e);
-		res.status(500).send({
-			success: false,
-			message: "Internal Server Error",
-			error: e.message,
-		});
-	}
+    } catch (e) {
+        console.log(e);
+        res.status(500).send({
+            success: false,
+            message: "Internal Server Error",
+            error: e.message,
+        });
+    }
 };
